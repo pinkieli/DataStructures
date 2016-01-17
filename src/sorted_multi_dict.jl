@@ -13,6 +13,7 @@ type SortedMultiDict{K, D, Ord <: Ordering}
     end
 end
 
+call{K,D}(::Type{SortedMultiDict{K,D}}) = SortedMultiDict{K,D,ForwardOrdering}(Forward)
 
 typealias SMDSemiToken IntSemiToken
 

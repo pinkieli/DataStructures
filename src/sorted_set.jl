@@ -13,6 +13,8 @@ type SortedSet{K, Ord <: Ordering}
     end
 end
 
+call{K}(::Type{SortedSet{K}}) = SortedSet{K,ForwardOrdering}(Forward)
+
 
 typealias SetSemiToken IntSemiToken
 
@@ -327,7 +329,7 @@ function Base.show{K,Ord <: Ordering}(io::IO, m::SortedSet{K,Ord})
         push!(keys, k)
     end
     print(io, keys)
-    println(io, ",")
+    print(io, ", ")
     print(io, orderobject(m))
     print(io, ")")
 end

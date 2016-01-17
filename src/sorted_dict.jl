@@ -14,6 +14,8 @@ type SortedDict{K, D, Ord <: Ordering} <: Associative{K,D}
 
 end
 
+call{K,D}(::Type{SortedDict{K,D}}) = SortedDict{K,D,ForwardOrdering}(Forward)
+
 ## external constructor to take an associative and infer
 ## argument types
 
