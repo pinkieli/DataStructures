@@ -295,7 +295,15 @@ end
 function test2()
     # test all methods of SortedDict here except loops
     m0 = SortedDict(Dict{Int, Float64}())
+    @test typeof(m0) == SortedDict{Int,Float64,ForwardOrdering}
     m1 = SortedDict(Dict(8=>32.0, 12=>33.1, 6=>18.2))
+    @test typeof(m1) == SortedDict{Int,Float64,ForwardOrdering}
+    m02 = SortedDict{Int,Float64}()
+    @test typeof(m02) == SortedDict{Int,Float64,ForwardOrdering}
+
+    @test m0 == m02
+    @test isequal(m0, m02)
+
     expected = ([6,8,12], [18.2, 32.0, 33.1])
     checkcorrectness(m1.bt, false)
     ii = startof(m1)
@@ -1331,6 +1339,13 @@ end
 function test7()
     # Test all methods of SortedMultiDict except loops
     factors = SortedMultiDict(Int[], Int[])
+    @test typeof(factors) == SortedMultiDict{Int,Int,ForwardOrdering}
+    factors2 = SortedMultiDict{Int,Int}()
+    @test typeof(factors2) == SortedMultiDict{Int,Int,ForwardOrdering}
+
+    #@test factors == factors2   # Broken!  TODO: fix me...
+    @test isequal(factors, factors2)
+
     N = 1000
     checkcorrectness(factors.bt, true)
     len = 0
@@ -1519,7 +1534,14 @@ function test8()
     # Test SortedSet
     N = 1000
     sm = 0.0
+
     m = SortedSet(Float64[])
+    @test typeof(m) == SortedSet{Float64, ForwardOrdering}
+    mm = SortedSet{Float64}()
+    @test typeof(mm) == SortedSet{Float64, ForwardOrdering}
+    #@test m == mm   # Broken!  TODO: Fix me...
+    @test isequal(m, mm)
+
     smallest = 10.0
     largest = -10.0
     for j = 1 : N
