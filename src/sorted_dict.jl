@@ -7,14 +7,23 @@ type SortedDict{K, D, Ord <: Ordering} <: Associative{K,D}
 
 ## Zero-argument constructor, or possibly one argument to specify order.
 
-    function SortedDict(o::Ord=Forward)
+    function SortedDict(o::Ord, ps...)
         bt1 = BalancedTree23{K,D,Ord}(o)
-        new(bt1)
+        s = new(bt1)
+        for (k,v) in ps
+            s[k] = v
+        end
+        s
     end
 
 end
 
+call(::Type{SortedDict}) = SortedDict{Any,Any,ForwardOrdering}(Forward)
 call{K,D}(::Type{SortedDict{K,D}}) = SortedDict{K,D,ForwardOrdering}(Forward)
+call{O<:Base.Order.Ordering}(::Type{SortedDict}, o::O) = SortedDict{Any,Any,O}(o)
+call{K,D,O<:Base.Order.Ordering}(::Type{SortedDict{K,D}}, o::O) = SortedDict{K,D,O}(o)
+call{K,D,O<:Base.Order.Ordering}(::Type{SortedDict{K,D}}, o::O, ps::Pair...) = SortedDict{K,D,O}(o, ps...)
+call{K,D}(::Type{SortedDict{K,D}}, ps::Pair...) = SortedDict{K,D}(Base.Forward, ps...)
 
 ## external constructor to take an associative and infer
 ## argument types
@@ -33,31 +42,21 @@ end
 ## Take pairs and infer argument
 ## types.  Note:  this works only for the Forward ordering.
 
-function SortedDict{K,D}(ps::Pair{K,D}...)
-    h = SortedDict{K,D,ForwardOrdering}()
-    for p in ps
-        h[p.first] = p.second
-    end
-    h
+function SortedDict{K,D}(p::Pair{K,D}, ps::Pair{K,D}...)
+    SortedDict{K,D,ForwardOrdering}(Base.Forward, p, ps...)
 end
 
 
 ## Take pairs and infer argument
 ## types.  Ordering parameter must be explicit first argument.
 
-
-function SortedDict{K,D, Ord <: Ordering}(o::Ord, ps::Pair{K,D}...)
-    h = SortedDict{K,D,Ord}(o)
-    for p in ps
-        h[p.first] = p.second
-    end
-    h
+function SortedDict{K,D, Ord <: Ordering}(o::Ord, p::Pair{K,D}, ps::Pair{K,D}...)
+    SortedDict{K,D,Ord}(o, p, ps...)
 end
 
 ## This one takes an iterable; ordering type is optional.
 
-SortedDict{Ord <: Ordering}(kv, o::Ord=Forward) =
-sorteddict_with_eltype(kv, eltype(kv), o)
+SortedDict{Ord <: Ordering}(kv, o::Ord=Forward) = sorteddict_with_eltype(kv, eltype(kv), o)
 
 function sorteddict_with_eltype{K,D,Ord}(kv, ::Type{Pair{K,D}}, o::Ord)
     h = SortedDict{K,D,Ord}(o)
