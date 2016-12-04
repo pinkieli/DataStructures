@@ -18,12 +18,12 @@ type SortedDict{K, D, Ord <: Ordering} <: Associative{K,D}
 
 end
 
-call(::Type{SortedDict}) = SortedDict{Any,Any,ForwardOrdering}(Forward)
-call{K,D}(::Type{SortedDict{K,D}}) = SortedDict{K,D,ForwardOrdering}(Forward)
-call{O<:Base.Order.Ordering}(::Type{SortedDict}, o::O) = SortedDict{Any,Any,O}(o)
-call{K,D,O<:Base.Order.Ordering}(::Type{SortedDict{K,D}}, o::O) = SortedDict{K,D,O}(o)
-call{K,D,O<:Base.Order.Ordering}(::Type{SortedDict{K,D}}, o::O, ps::Pair...) = SortedDict{K,D,O}(o, ps...)
-call{K,D}(::Type{SortedDict{K,D}}, ps::Pair...) = SortedDict{K,D}(Base.Forward, ps...)
+@compat (::Type{SortedDict})() = SortedDict{Any,Any,ForwardOrdering}(Forward)
+@compat (::Type{SortedDict{K,D}}){K,D}() = SortedDict{K,D,ForwardOrdering}(Forward)
+@compat (::Type{SortedDict}){O}(o::O) = SortedDict{Any,Any,O}(o)
+@compat (::Type{SortedDict{K,D}}){K,D,O}(o::O) = SortedDict{K,D,O}(o)
+@compat (::Type{SortedDict{K,D}}){K,D,O}(o::O, ps::Pair...) = SortedDict{K,D,O}(o, ps...)
+@compat (::Type{SortedDict{K,D}}){K,D}(ps::Pair...) = SortedDict{K,D}(Base.Forward, ps...)
 
 ## external constructor to take an associative and infer
 ## argument types
@@ -98,8 +98,8 @@ end
 ## push! is an alternative to insert!; it returns the container.
 
 
-@inline function push!{K, D, Ord <: Ordering}(m::SortedDict{K,D,Ord}, pr::Pair{K,D})
-    insert!(m.bt, convert(K,pr[1]), convert(D,pr[2]), false)
+@inline function push!{K,D}(m::SortedDict{K,D}, pr::Pair)
+    insert!(m.bt, convert(K, pr[1]), convert(D, pr[2]), false)
     m
 end
 

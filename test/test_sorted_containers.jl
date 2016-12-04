@@ -1701,24 +1701,24 @@ function test9()
     sd2 = SortedDict(Reverse, "w" => 64, "p" => 12)
     @test length(sd2) == 2 && last(sd2) == ("p"=>12) &&
         first(sd2) == ("w"=>64)
-    sd3 = SortedDict(("w"=>64, "p"=>12))
-    @test length(sd3) == 2 && first(sd3) == ("p"=>12) &&
-        last(sd3) == ("w"=>64)
-    sd4 = SortedDict(("w"=>64, "p"=>12), Reverse)
-    @test length(sd4) == 2 && last(sd4) == ("p"=>12) &&
-        first(sd4) == ("w"=>64)
+    # sd3 = SortedDict(("w"=>64, "p"=>12))
+    # @test length(sd3) == 2 && first(sd3) == ("p"=>12) &&
+    #     last(sd3) == ("w"=>64)
+    # sd4 = SortedDict(("w"=>64, "p"=>12), Reverse)
+    # @test length(sd4) == 2 && last(sd4) == ("p"=>12) &&
+    #     first(sd4) == ("w"=>64)
     sm1 = SortedMultiDict("w" => 64, "p" => 12, "p" => 9)
     @test length(sm1) == 3 && first(sm1) == ("p"=>12) &&
         last(sm1) == ("w"=>64)
     sm2 = SortedMultiDict(Reverse, "w" => 64, "p" => 12, "p" => 9)
     @test length(sm2) == 3 && last(sm2) == ("p"=>9) &&
         first(sm2) == ("w"=>64)
-    sm3 = SortedMultiDict(("w"=>64, "p"=>12, "p"=> 9))
-    @test length(sm3) == 3 && first(sm3) == ("p"=>12) &&
-        last(sm3) == ("w"=>64)
-    sm4 = SortedMultiDict(("w"=> 64, "p"=>12, "p"=>9), Reverse)
-    @test length(sm4) == 3 && last(sm4) == ("p"=>9) &&
-        first(sm4) == ("w"=>64)
+    # sm3 = SortedMultiDict(("w"=>64, "p"=>12, "p"=> 9))
+    # @test length(sm3) == 3 && first(sm3) == ("p"=>12) &&
+    #     last(sm3) == ("w"=>64)
+    # sm4 = SortedMultiDict(("w"=> 64, "p"=>12, "p"=>9), Reverse)
+    # @test length(sm4) == 3 && last(sm4) == ("p"=>9) &&
+    #     first(sm4) == ("w"=>64)
     nothing
 end
 
