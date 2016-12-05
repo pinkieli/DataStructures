@@ -20,9 +20,9 @@ end
 
 @compat (::Type{SortedDict})() = SortedDict{Any,Any,ForwardOrdering}(Forward)
 @compat (::Type{SortedDict{K,D}}){K,D}() = SortedDict{K,D,ForwardOrdering}(Forward)
-@compat (::Type{SortedDict}){O}(o::O) = SortedDict{Any,Any,O}(o)
-@compat (::Type{SortedDict{K,D}}){K,D,O}(o::O) = SortedDict{K,D,O}(o)
-@compat (::Type{SortedDict{K,D}}){K,D,O}(o::O, ps::Pair...) = SortedDict{K,D,O}(o, ps...)
+@compat (::Type{SortedDict}){O<:Ordering}(o::O) = SortedDict{Any,Any,O}(o)
+@compat (::Type{SortedDict{K,D}}){K,D,O<:Ordering}(o::O) = SortedDict{K,D,O}(o)
+@compat (::Type{SortedDict{K,D}}){K,D,O<:Ordering}(o::O, ps::Pair...) = SortedDict{K,D,O}(o, ps...)
 @compat (::Type{SortedDict{K,D}}){K,D}(ps::Pair...) = SortedDict{K,D}(Base.Forward, ps...)
 
 ## external constructor to take an associative and infer
