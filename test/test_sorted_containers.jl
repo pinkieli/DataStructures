@@ -4,6 +4,7 @@ import Base.Reverse
 import DataStructures.eq
 import Base.lt
 import Base.ForwardOrdering
+import Base.ReverseOrdering
 import DataStructures.IntSemiToken
 
 immutable CaseInsensitive <: Ordering
@@ -1423,6 +1424,12 @@ end
     #@test m == mm   # Broken!  TODO: Fix me...
     @test isequal(m, mm)
 
+    @test typeof(SortedSet()) == SortedSet{Any, ForwardOrdering}
+    @test typeof(SortedSet{Float64}()) == SortedSet{Float64, ForwardOrdering}
+    @test typeof(SortedSet(Reverse)) == SortedSet{Any, ReverseOrdering{ForwardOrdering}}
+    @test typeof(SortedSet{Float64}(Reverse)) == SortedSet{Float64, ReverseOrdering{ForwardOrdering}}
+
+
     smallest = 10.0
     largest = -10.0
     for j = 1 : N
@@ -1586,6 +1593,12 @@ end
     sd4 = SortedDict(("w"=>64, "p"=>12), Reverse)
     @test length(sd4) == 2 && last(sd4) == ("p"=>12) &&
         first(sd4) == ("w"=>64)
+
+    @test typeof(SortedDict()) == SortedDict{Any,Any,ForwardOrdering}
+    @test typeof(SortedDict(CaseInsensitive())) == SortedDict{Any,Any,CaseInsensitive}
+    @test typeof(SortedDict{Int,Int}(Reverse)) == SortedDict{Int,Int,ReverseOrdering{ForwardOrdering}}
+    @test typeof(SortedDict{Int,Int}(Reverse, 1=>2)) == SortedDict{Int,Int,ReverseOrdering{ForwardOrdering}}
+    @test typeof(SortedDict{Int,Int}(1=>2)) == SortedDict{Int,Int,ForwardOrdering}
 end
 
 @testset "SortedMultiDictConstructors" begin
@@ -1601,6 +1614,12 @@ end
     sm4 = SortedMultiDict(("w"=> 64, "p"=>12, "p"=>9), Reverse)
     @test length(sm4) == 3 && last(sm4) == ("p"=>9) &&
         first(sm4) == ("w"=>64)
+
+    @test typeof(SortedMultiDict()) == SortedMultiDict{Any,Any,ForwardOrdering}
+    @test typeof(SortedMultiDict(CaseInsensitive())) == SortedMultiDict{Any,Any,CaseInsensitive}
+    @test typeof(SortedMultiDict{Int,Int}(Reverse)) == SortedMultiDict{Int,Int,ReverseOrdering{ForwardOrdering}}
+    # @test typeof(SortedMultiDict{Int,Int}(Reverse, 1=>2)) == SortedMultiDict{Int,Int,ReverseOrdering{ForwardOrdering}}
+    # @test typeof(SortedMultiDict{Int,Int}(1=>2)) == SortedMultiDict{Int,Int,ForwardOrdering}
 end
 
 end # Testset
