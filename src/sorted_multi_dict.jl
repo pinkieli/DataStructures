@@ -15,7 +15,6 @@ end
 
 @compat (::Type{SortedMultiDict})() = SortedMultiDict{Any,Any,ForwardOrdering}(Forward)
 @compat (::Type{SortedMultiDict{K,D}}){K,D}() = SortedMultiDict{K,D,ForwardOrdering}(Forward)
-@compat (::Type{SortedMultiDict{O}}){O<:Ordering}() = SortedMultiDict{Any,Any,O}(O())
 @compat (::Type{SortedMultiDict}){O<:Ordering}(o::O) = SortedMultiDict{Any,Any,O}(o)
 @compat (::Type{SortedMultiDict{K,D}}){K,D,O<:Ordering}(o::O) = SortedMultiDict{K,D,O}(o)
 # @compat (::Type{SortedMultiDict{K,D}}){K,D,O<:Ordering}(o::O, ps::Pair...) = SortedMultiDict{K,D,O}(o, ps...)
