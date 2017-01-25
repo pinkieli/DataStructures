@@ -114,8 +114,8 @@ in terms of the container.
 Constructors for Sorted Containers
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-``SortedDict(o=Forward)``
-``SortedDict{K,V}(o=Forward)``
+``SortedDict(o=Forward)
+SortedDict{K,V}(o=Forward)``
   Construct an empty ``SortedDict`` with key type ``K`` and value type ``V``.
   If ``K`` and ``V`` are not specified, the dictionary defaults to a
   ``SortedDict{Any,Any}``.  Keys and values are converted to the
@@ -129,6 +129,7 @@ Constructors for Sorted Containers
   constructors below in which the key type is inferred.**
 
 ``SortedDict(k1=>v1, k2=>v2, ...)``
+
 ``SortedDict{K,V}(k1=>v1, k2=>v2, ...)``
   Construct a ``SortedDict`` from the given key-value pairs.
   If ``K`` and ``V`` are not specified, key type and
@@ -136,6 +137,7 @@ Constructors for Sorted Containers
   to be ``Forward`` ordering.
 
 ``SortedDict(o, k1=>v1, k2=>v2, ...)``
+
 ``SortedDict{K,V}(o, k1=>v1, k2=>v2, ...)``
   Construct a ``SortedDict`` from the given pairs with the specified
   ordering ``o``.  If ``K`` and ``V`` are
@@ -143,6 +145,7 @@ Constructors for Sorted Containers
   See below for more information about ordering.
 
 ``SortedDict(d,o=Forward)``
+
 ``SortedDict{K,V}(d,o=Forward)``
   Construct a ``SortedDict`` from an ordinary Julia dict ``d`` (or
   any associative type), e.g.::
@@ -160,6 +163,7 @@ Constructors for Sorted Containers
   See below for more information about ordering.
 
 ``SortedDict(iter,o=Forward)``
+
 ``SortedDict{K,V}(iter,o=Forward)``
   Construct a ``SortedDict`` from an arbitrary iterable object of
   ``key=>value`` pairs.
