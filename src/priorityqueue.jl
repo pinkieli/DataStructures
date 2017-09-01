@@ -31,7 +31,7 @@ type PriorityQueue{K,V,O<:Ordering} <: Associative{K,V}
     # Map elements to their index in xs
     index::Dict{K, Int}
 
-    function (::Type{PriorityQueue{K,V,O}}){K,V,O<:Ordering}(o::O)
+    function (::Type{PriorityQueue{K,V,O}}){K,V,O<:Ordering}(o::O = Forward)
         new{K,V,O}(Vector{Pair{K,V}}(0), o, Dict{K, Int}())
     end
 

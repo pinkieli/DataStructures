@@ -1,6 +1,9 @@
-# This was formerly a part of Julia. License is MIT: http://julialang.org/license
+using DataStructures
+using Base.Test
 
-import Base.Order.Reverse
+import Base.Order: Reverse, ForwardOrdering
+
+# This was formerly a part of Julia. License is MIT: http://julialang.org/license
 
 
 @testset "PriorityQueue" begin
@@ -62,6 +65,12 @@ end
         pq5[k] = v
     end
     test_issorted!(pq5, priorities)
+
+    pq5b = PriorityQueue{Int,Int,ForwardOrdering}()
+    for (k,v) in priorities
+        pq5b[k] = v
+    end
+    test_issorted!(pq5b, priorities)
 
     # parameterized constructor tests
     pq6 = PriorityQueue{Int,Int}(priorities)
